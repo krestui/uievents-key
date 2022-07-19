@@ -10,7 +10,10 @@ This library is issued under MIT License free to integrate and distribute.
 
 ## Code
 
-The enum values have been scraped from the html page and auto-generated. 
+The enum values have been scraped from the html page of the w3c spec above - [https://w3c.github.io/uievents-key/](https://w3c.github.io/uievents-key/) and auto-generated.
+
+
+To know more about the code to generate, visit [https://github.com/krestui/uievents-key/packages/uievents-keygen](https://github.com/krestui/uievents-key/packages/uievents-keygen) .
 
 ## Usage
 

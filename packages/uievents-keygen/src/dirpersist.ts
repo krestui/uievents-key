@@ -61,7 +61,7 @@ ${enumDefinition}
 \`\`\`ts
 ${enumDefinition}
 \`\`\`    
-`;    
+`;
     return markdownLine;
   };
 

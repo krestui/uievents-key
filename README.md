@@ -1,19 +1,18 @@
-# uievents-key 
+# uievents-key
 
-`@krestui/uievents-key` contains the enum constants for the KeyboardEvent key values as mentioned in the specification -     [https://w3c.github.io/uievents-key/](https://w3c.github.io/uievents-key/) . 
+`@krestui/uievents-key` contains the enum constants for the KeyboardEvent key values as mentioned in the specification - [https://w3c.github.io/uievents-key/](https://w3c.github.io/uievents-key/) .
 
 ## Installation
 
 ## LICENSE
 
-This library is issued under MIT License free to integrate and distribute. 
-
+This library is issued under MIT License free to integrate and distribute.
 
 ## Usage
 
-The following enums are available to be used in the library 
+The following enums are available to be used in the library
 
-### AppsKeys 
+### AppsKeys
 
 ```ts
 export enum AppsKeys {
@@ -45,4 +44,3 @@ export enum AppsKeys {
   LaunchWordProcessor = 'LaunchWordProcessor'
 }
 ```
-

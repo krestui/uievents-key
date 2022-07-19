@@ -5,7 +5,7 @@
   "main": "dist/index.cjs",
   "module": "dist/index.esm.mjs",
   "types": "dist/index.d.ts",
-  "repository": "git@github.com:krestui/krestui.git",
+  "repository": "git@github.com:krestui/uievents-key.git",
   "author": "KrestUI",
   "license": "MIT",
   "type": "module",

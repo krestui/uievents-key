@@ -26,7 +26,11 @@ export class DirPersist extends Persist {
     this.output_dir = output_dir;
   }
 
-  writeGroupFile = (filenameonly: string, enumValue: string, sortedKeys: Array<EventKey>) => {
+  writeGroupFile = (
+    filenameonly: string,
+    enumValue: string,
+    sortedKeys: Array<EventKey>
+  ): string => {
     const keyStrings = sortedKeys.map((key: EventKey) => {
       const value = key.key;
       const description = key.description.replace(/\n/g, '\n//');
@@ -35,19 +39,30 @@ ${value} = "${value}"`;
     });
     const keyString = keyStrings.join(',\n');
     const filename = join(this.output_dir, filenameonly + '.ts');
+    const enumDefinition = `
+    export enum ${enumValue} {
+      ${keyString}
+    }
+    `;
     Persist.writeContents(
       filename,
       `
 ${licenseHeader}
 ${autoGenHeader}
-export enum ${enumValue} {
-${keyString}
-}
+${enumDefinition}
 `
     );
     sortedKeys.forEach((key: EventKey) => {
       console.log(`${key.key} - ${key.required} - ${key.description}`);
     });
+    const markdownLine = `
+### ${enumValue}
+
+\`\`\`ts
+${enumDefinition}
+\`\`\`    
+`;    
+    return markdownLine;
   };
 
   writeMapFile = (importLines: string, updateLines: string) => {
@@ -77,16 +92,22 @@ export { isSpecialKey } from './key-map';
     Persist.writeContents(join(this.output_dir, 'index.ts'), content);
   };
 
+  writeMarkdown = (content: string) => {
+    Persist.writeContents(join(this.output_dir, 'USAGE.md'), content);
+  };
+
   persist = (groups: Array<EventGroup>): void => {
     const indexFileLines: Array<string> = [];
     const mapFileLines: Array<string> = [];
     const mapUpdateLines: Array<string> = [];
+    const markdownLines: Array<string> = [];
     groups.forEach((value: EventGroup) => {
       console.log(`*****   ${value.groupName} ******`);
       const enumValue = Persist.keyToEnumName(value.groupName) + 'Keys';
       const filenameonly = value.groupName + '-keys';
       const sortedKeys = value.keys.sort();
-      this.writeGroupFile(filenameonly, enumValue, sortedKeys);
+      const markdownLine = this.writeGroupFile(filenameonly, enumValue, sortedKeys);
+      markdownLines.push(markdownLine);
       indexFileLines.push(`export { ${enumValue} } from './${filenameonly}';`);
       mapFileLines.push(`import { ${enumValue} } from './${filenameonly}';`);
       mapUpdateLines.push(
@@ -95,6 +116,7 @@ export { isSpecialKey } from './key-map';
     });
     this.writeMapFile(mapFileLines.join('\n'), mapUpdateLines.join('\n'));
     this.writeIndex(indexFileLines.join('\n'));
+    this.writeMarkdown(markdownLines.join('\n'));
     console.log(`Should be writing to ${this.output_dir}`);
   };
 }

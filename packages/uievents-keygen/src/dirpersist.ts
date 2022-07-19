@@ -34,8 +34,8 @@ export class DirPersist extends Persist {
     const keyStrings = sortedKeys.map((key: EventKey) => {
       const value = key.key;
       const description = key.description.replace(/\n/g, '\n//');
-      return `// ${description}. Required: ${key.required}
-${value} = "${value}"`;
+      return `// ${description}. Required: ${key.required ? 'Yes' : 'No'}
+      ${value} = "${value}"`;
     });
     const keyString = keyStrings.join(',\n');
     const filename = join(this.output_dir, filenameonly + '.ts');
@@ -53,7 +53,7 @@ ${enumDefinition}
 `
     );
     sortedKeys.forEach((key: EventKey) => {
-      console.log(`${key.key} - ${key.required} - ${key.description}`);
+      console.log(`${key.key} - ${key.required ? 'Yes' : 'No'} - ${key.description}`);
     });
     const markdownLine = `
 ### ${enumValue}

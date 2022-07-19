@@ -9,11 +9,11 @@ import { readFileSync, writeFile, statSync } from 'fs';
 const URL = 'https://raw.githubusercontent.com/w3c/uievents-key/gh-pages/index.html';
 async function downlad_w3c_html(url: string): Promise<string> {
   try {
-    const { data } = await axios.get(url);
+    const { data } = await axios.get<string>(url);
     return data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      throw new Error(`Axios error ${error}`);
+      throw new Error(`Axios error ${error.message}`);
     } else {
       throw new Error(`Unexpected error ${error}`);
     }
@@ -23,7 +23,7 @@ async function downlad_w3c_html(url: string): Promise<string> {
 function writeContents(filename: string, data: string) {
   writeFile(filename, data, 'utf8', (err) => {
     if (err) {
-      console.log(`Error writing to ${filename} - ${err}`);
+      console.log(`Error writing to ${filename} - ${err.message}`);
     }
   });
 }

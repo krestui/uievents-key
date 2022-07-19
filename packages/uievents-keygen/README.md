@@ -1,3 +1,0 @@
-# Idgen
-
-Generate id automatically

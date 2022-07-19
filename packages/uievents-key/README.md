@@ -1,3 +1,1 @@
-# Idgen
-
-Generate id automatically
+../../README.md

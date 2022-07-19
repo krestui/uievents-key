@@ -1,6 +1,6 @@
 {
   "name": "@krestui/uievents-key",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "entry": "src/index.ts",
   "main": "dist/index.cjs",
   "module": "dist/index.esm.mjs",

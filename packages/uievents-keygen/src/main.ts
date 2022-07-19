@@ -21,7 +21,7 @@ export function main() {
   doProcess('index.html', './../../uievents-key/src').then(
     (value: void) => {},
     (err) => {
-      console.log(`Error processing ${err.message}`);
+      console.log(`Error processing ${err}`);
     }
   );
 }

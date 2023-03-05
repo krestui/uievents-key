@@ -12,6 +12,7 @@ import typescript from '@rollup/plugin-typescript';
 // import typescript2 from 'rollup-plugin-typescript2';
 import babel from "@rollup/plugin-babel";
 import externals from "rollup-plugin-node-externals";
+import del from 'rollup-plugin-delete';
 
 const current_package = path.join(process.cwd(), "package.json");
 let pkg = JSON.parse(fs.readFileSync(current_package));
@@ -72,7 +73,10 @@ const config = [{	input: pkg.entry,
     // path to your declaration files root
     input: './dist/out/index.d.ts',
     output: [{ file: 'dist/index.d.ts', format: 'es' }],
-    plugins: [dts()]
+    plugins: [
+		dts(),
+		del({ targets: 'dist/out/*', hook: 'buildEnd', verbose: true }), 
+]
   }
 ];
 

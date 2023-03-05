@@ -75,7 +75,7 @@ const config = [{	input: pkg.entry,
     output: [{ file: 'dist/index.d.ts', format: 'es' }],
     plugins: [
 		dts(),
-		del({ targets: 'dist/out/*', hook: 'buildEnd', verbose: true }), 
+		del({ targets: 'dist/out', hook: 'buildEnd', verbose: true }), 
 ]
   }
 ];

@@ -1,16 +1,19 @@
 {
   "name": "@krestui/uievents-key",
   "version": "0.3.0",
-  "entry": "src/index.ts",
-  "main": "dist/index.cjs",
-  "module": "dist/index.esm.mjs",
-  "types": "dist/index.d.ts",
   "repository": "git@github.com:krestui/uievents-key.git",
   "author": "KrestUI",
   "license": "MIT",
   "type": "module",
-  "publishConfig": {
-    "access": "public"
+  "entry": "src/index.ts",
+  "main": "dist/index.cjs",
+  "module": "dist/index.esm.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "default": "./dist/index.esm.mjs",
+      "types": "./dist/index.d.ts"
+    }
   },
   "scripts": {
     "clean": "rimraf dist && rimraf types",
@@ -35,5 +38,8 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }

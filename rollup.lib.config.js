@@ -4,26 +4,22 @@ import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import bundleSize from 'rollup-plugin-bundle-size';
 import analyze from 'rollup-plugin-analyzer';
-import {terser} from 'rollup-plugin-terser';
+import terser from '@rollup/plugin-terser';
+import dts from 'rollup-plugin-dts';
 import path from 'path';
 import fs from 'fs';
 import typescript from '@rollup/plugin-typescript';
 // import typescript2 from 'rollup-plugin-typescript2';
 import babel from "@rollup/plugin-babel";
 import externals from "rollup-plugin-node-externals";
+import del from 'rollup-plugin-delete';
 
 const current_package = path.join(process.cwd(), "package.json");
 let pkg = JSON.parse(fs.readFileSync(current_package));
-const production = (process.env.NODE_ENV === 'production');
-console.log(`PRODUCTION: ${production}`);
-
-const pkg_name = pkg.name
-	.replace(/^\w/, m => m.toUpperCase())
-	.replace(/-\w/g, m => m[1].toUpperCase());
-console.log(`pkg.module: ${pkg.module}, pkg.main: ${pkg.main}, pkg.name: ${pkg.name}, dir: ${__dirname}, cwd: ${process.cwd()}`);
+const isProduction = (process.env.NODE_ENV === 'production');
 
 const rollup_common_plugins = [
-	(production && terser()),
+	(isProduction && terser()),
 	analyze(),
 	bundleSize()
 ];
@@ -32,16 +28,15 @@ const external_libs = [
 	/@babel\/runtime/
 ];
 
-export default  {
-	input: pkg.entry,
+const config = [{	input: pkg.entry,
 	output:  [{ 
 		file: pkg.module,
 		format: 'es',
-		sourcemap: production
+		sourcemap: isProduction
 	}, {
 		file: pkg.main,
 		format: 'cjs',
-		sourcemap: production
+		sourcemap: isProduction
 	}],
 	external: external_libs,	
 	plugins: [
@@ -55,10 +50,9 @@ export default  {
         }),		
 		typescript({
 			tsconfig: './tsconfig.json',
-			sourceMap: production,
+			sourceMap: isProduction,
 			declaration: true,
-			declarationDir: ".",
-			outDir: "dist",
+			declarationDir: "./out",
 			declarationMap: true,
 			emitDeclarationOnly: true,
 			noEmitOnError: true,
@@ -74,4 +68,16 @@ export default  {
 		}),		
 		...rollup_common_plugins,
 	]
-};
+},
+{
+    // path to your declaration files root
+    input: './dist/out/index.d.ts',
+    output: [{ file: 'dist/index.d.ts', format: 'es' }],
+    plugins: [
+		dts(),
+		del({ targets: 'dist/out', hook: 'buildEnd', verbose: true }), 
+]
+  }
+];
+
+export default config;

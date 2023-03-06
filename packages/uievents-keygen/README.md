@@ -5,7 +5,7 @@ The uievents key generator scrapes the html page from the w3c specification - [h
 It captures the KeyboardEvent constants as enum values to be used in the code better.
 
 ```bash
-$ yarn keygen
+$ yarn genkeys
 ```
 
 to autogenerate the enum values scraped from w3c specification page.

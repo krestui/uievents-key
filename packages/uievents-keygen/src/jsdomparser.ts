@@ -13,7 +13,7 @@ export class JSDOMParser implements Parser {
     const dom = new JSDOM(data);
     const elements = dom.window.document.querySelectorAll('table');
     const event_groups: Array<EventGroup> = [];
-    elements.forEach((group: HTMLTableElement, key: number) => {
+    elements.forEach((group: HTMLTableElement, i: number) => {
       const id = group.attributes.getNamedItem('id')?.value;
       const group_name = id?.slice('key-table-'.length);
       const event_group = {

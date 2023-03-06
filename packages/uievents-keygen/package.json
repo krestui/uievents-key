@@ -9,9 +9,7 @@
   "author": "KrestUI",
   "license": "MIT",
   "type": "module",
-  "publishConfig": {
-    "access": "public"
-  },
+  "private": true,
   "scripts": {
     "clean": "rimraf dist && rimraf types",
     "eslint:test": "eslint __tests__ --ext .ts",

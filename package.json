@@ -81,7 +81,7 @@
     "test": "echo testing common lib && yarn workspaces foreach run test",
     "format": "yarn workspaces foreach run format",
     "next": "yarn workspaces foreach run next",
-    "pub": "yarn workspaces foreach run pub"
+    "pub": "yarn workspace @krestui/uievents-key run pub"
   },
   "files": []
 }
